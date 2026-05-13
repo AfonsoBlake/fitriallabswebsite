@@ -1,0 +1,134 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-white: #FFFFFF;
+  --color-brand-lavender: #C4B8F0;
+  --color-brand-indigo: #6B6FD4;
+  --color-brand-indigo-light: #8B8FE8;
+  --color-brand-indigo-deep: #3B3A8A;
+  --color-brand-indigo-shadow: #1E1B4B;
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --font-display: 'Montserrat', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}
+
+:root {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --card: #1E1B4B;
+  --card-foreground: #FFFFFF;
+  --popover: #1E1B4B;
+  --popover-foreground: #FFFFFF;
+  --primary: #6B6FD4;
+  --primary-foreground: #FFFFFF;
+  --secondary: #3B3A8A;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1E1B4B;
+  --muted-foreground: #C4B8F0;
+  --accent: #6B6FD4;
+  --accent-foreground: #FFFFFF;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(107, 111, 212, 0.3);
+  --input: rgba(107, 111, 212, 0.3);
+  --ring: #6B6FD4;
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    font-weight: 900;
+    line-height: 1.05;
+  }
+}
+
+@layer utilities {
+  .glow {
+    color: #6B6FD4;
+    text-shadow: 0 0 20px #6B6FD4, 0 0 40px rgba(107, 111, 212, 0.5);
+  }
+  .font-mono-caps {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    color: #C4B8F0;
+  }
+  .btn-primary {
+    background: #6B6FD4;
+    color: #FFFFFF;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover { background: #8B8FE8; }
+  .btn-secondary {
+    background: transparent;
+    color: #FFFFFF;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    border: 1px solid #FFFFFF;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-secondary:hover { border-color: #6B6FD4; color: #6B6FD4; }
+  .card-fluario {
+    border: 1px solid rgba(107, 111, 212, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.2s ease;
+    background: rgba(30, 27, 75, 0.3);
+  }
+  .card-fluario:hover { border-color: rgba(107, 111, 212, 0.6); }
+  .section-pad { padding: 6rem 3rem; }
+  @media (max-width: 768px) {
+    .section-pad { padding: 4rem 1.5rem; }
+  }
+}
