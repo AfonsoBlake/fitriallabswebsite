@@ -1,8 +1,16 @@
 import { Reveal } from "./Reveal";
 
 const founders = [
-  { name: "Afonso", initial: "A", bio: "Co-founder focused on sales, strategy, and client growth. Obsessed with turning conversations into conversions." },
-  { name: "Kareem", initial: "K", bio: "Co-founder and technical architect. Designed and built the entire Fluario AI system from scratch." },
+  {
+    name: "Afonso",
+    photo: "/afonso.jpg",
+    bio: "Focused on sales, strategy, and solidifying the next moves to execute. Technical architect and alongside Kareem, turning ideas into reality.",
+  },
+  {
+    name: "Kareem",
+    photo: "/kareem.jpg",
+    bio: "Kareem is Flaurio's main technical co-founder. Turning ideas into architectural builds and AI pipelines.",
+  },
 ];
 
 export function Founders() {
@@ -16,21 +24,18 @@ export function Founders() {
           {founders.map((f, i) => (
             <Reveal key={f.name} delay={i * 0.1}>
               <div className="card-fluario">
-                <div className="aspect-[3/4] w-full rounded-xl flex items-center justify-center" style={{ border: "1px solid rgba(107,111,212,0.3)", background: "linear-gradient(135deg, rgba(107,111,212,0.15), rgba(30,27,75,0.5))" }}>
-                  <div
-                    className="flex items-center justify-center rounded-full text-white"
+                <div style={{ height: 380, width: "100%", borderRadius: 12, overflow: "hidden", border: "1px solid rgba(107,111,212,0.3)", background: "rgba(30,27,75,0.3)" }}>
+                  <img
+                    src={f.photo}
+                    alt={f.name}
                     style={{
-                      width: 160,
-                      height: 160,
-                      background: "#6B6FD4",
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 900,
-                      fontSize: 72,
-                      boxShadow: "0 0 40px rgba(107,111,212,0.4)",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                      objectPosition: "center center",
+                      display: "block",
                     }}
-                  >
-                    {f.initial}
-                  </div>
+                  />
                 </div>
                 <div className="mt-6 font-mono-caps">Co-Founder</div>
                 <h3 className="mt-2 text-3xl text-white">{f.name}</h3>

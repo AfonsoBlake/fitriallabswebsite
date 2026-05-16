@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Send } from "lucide-react";
 import { Reveal } from "./Reveal";
-import { InstagramDMMockup } from "./InstagramDMMockup";
+import { PhoneDemoBioSkin } from "./PhoneDemoBioSkin";
 
 type ChatMessage = {
   id: string;
@@ -158,7 +158,9 @@ export function LiveDemo() {
             </div>
           </Reveal>
           <Reveal delay={0.2}>
-            <InstagramDMMockup />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <PhoneDemoBioSkin />
+            </div>
           </Reveal>
         </div>
       </div>

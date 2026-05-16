@@ -3,7 +3,7 @@ import { Reveal } from "./Reveal";
 
 const stats = [
   { icon: Clock, value: "<60s", label: "Average response time" },
-  { icon: ArrowUpRight, value: "+31%", label: "Booked call increase" },
+  { icon: ArrowUpRight, value: "+80%", label: "DM to customer conversion" },
   { icon: InfinityIcon, value: "24/7", label: "Lead qualification" },
 ];
 
@@ -15,7 +15,7 @@ export function Infrastructure() {
           <span className="font-mono-caps">DM Automation Infrastructure</span>
           <h2 className="mt-4 text-4xl md:text-5xl">Respond to leads in under 60 seconds — without hiring more staff.</h2>
           <p className="mt-6 text-lg" style={{ color: "#C4B8F0" }}>
-            Built to qualify, nurture, and book customers automatically through Instagram DMs.
+            Built to answer, nurture and funnel customers automatically through social media DM's.
           </p>
         </Reveal>
         <Reveal delay={0.15}>
