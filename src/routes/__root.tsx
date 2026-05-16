@@ -1,3 +1,4 @@
+import IntroOverlay from '../components/IntroOverlay'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -113,6 +114,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <IntroOverlay />
       <Outlet />
     </QueryClientProvider>
   );
