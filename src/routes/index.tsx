@@ -15,16 +15,6 @@ import { Footer } from "@/components/Footer";
 import { FloatingCTA } from "@/components/FloatingCTA";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Fluario — AI-Powered DM Automation for Gyms" },
-      { name: "description", content: "Fluario turns your Instagram, TikTok, and Facebook DMs into a 24/7 sales machine — no staff needed." },
-      { property: "og:title", content: "Fluario — AI-Powered DM Automation for Gyms" },
-      { property: "og:description", content: "Fluario turns your Instagram, TikTok, and Facebook DMs into a 24/7 sales machine — no staff needed." },
-      { property: "og:image", content: "/fluario-logo.png" },
-    ],
-    links: [{ rel: "icon", href: "/fluario-icon.png" }],
-  }),
   component: Index,
 });
 

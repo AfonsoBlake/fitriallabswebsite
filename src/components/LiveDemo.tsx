@@ -17,6 +17,9 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   },
 ];
 
+const SUPABASE_CHAT_URL =
+  "https://ldkrxbpoixookrwmdufk.supabase.co/functions/v1/fluario-website-chat";
+
 export function LiveDemo() {
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
@@ -39,7 +42,7 @@ export function LiveDemo() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/chat", {
+      const res = await fetch(SUPABASE_CHAT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -49,8 +52,14 @@ export function LiveDemo() {
 
       if (!res.ok) throw new Error("Request failed");
 
-      const data = (await res.json()) as { reply?: string };
-      const reply = data.reply?.trim() || "Something went wrong, try again.";
+      const data = (await res.json()) as Record<string, unknown>;
+      const reply = (
+        (data.reply as string | undefined) ??
+        (data.message as string | undefined) ??
+        ((data as { choices?: { message?: { content?: string } }[] }).choices?.[0]?.message?.content) ??
+        (data.content as string | undefined) ??
+        ""
+      ).trim() || "Something went wrong, try again.";
 
       setMessages((prev) => [
         ...prev,
