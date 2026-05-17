@@ -3,7 +3,7 @@ import { Reveal } from "./Reveal";
 const items = [
   { n: "01", t: "DM Automation", d: "AI responds to every inbound message instantly — no delays, no missed leads, no human required." },
   { n: "02", t: "Lead Qualification", d: "Smart filtering separates serious buyers from tire-kickers using your exact qualification criteria." },
-  { n: "03", t: "Appointment Booking", d: "Leads go straight from a conversation to a booked call on your calendar. Zero friction." },
+  { n: "03", t: "Funneling Prospects", d: "Interested prospects become leads through a psychology-backed flow that funnels deeper to achieve your first CTA." },
   { n: "04", t: "Multi-Platform Coverage", d: "One AI agent. Three platforms. Instagram, TikTok, and Facebook DMs covered simultaneously." },
   { n: "05", t: "Campaign Sequences", d: "Automated follow-up sequences that re-engage cold leads and turn silence into sales conversations." },
   { n: "06", t: "Analytics & Reporting", d: "Real-time dashboards showing message volume, qualification rates, bookings, and revenue attribution." },

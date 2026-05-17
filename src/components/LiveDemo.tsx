@@ -71,7 +71,7 @@ export function LiveDemo() {
   };
 
   return (
-    <section className="section-pad">
+    <section id="live-demo" className="section-pad">
       <div className="mx-auto max-w-[1400px] text-center">
         <Reveal>
           <h2 className="text-4xl md:text-5xl">See the AI in action.</h2>

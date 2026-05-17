@@ -15,7 +15,9 @@ export function FloatingCTA() {
     <AnimatePresence>
       {visible && (
         <motion.a
-          href="#booking"
+          href="https://calendly.com/fittriallabs/30min"
+          target="_blank"
+          rel="noopener noreferrer"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
@@ -28,7 +30,7 @@ export function FloatingCTA() {
             boxShadow: "0 0 30px rgba(107,111,212,0.6), 0 10px 25px rgba(0,0,0,0.35)",
           }}
         >
-          BOOK A CALL
+          BOOK YOUR FREE CALL
         </motion.a>
       )}
     </AnimatePresence>
