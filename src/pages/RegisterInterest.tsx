@@ -1,14 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-// Google Apps Script web app URL — receives POST and writes to the linked Sheet.
-// The script must have "Execute as: Me" and "Who has access: Anyone" to accept
-// unauthenticated POST requests. Apps Script returns a 302 redirect, so
-// mode: 'no-cors' is required; the response is opaque but data is always received.
-// Apps Script returns a redirect (302), so mode: 'no-cors' is required; the
-// response is opaque but the payload is always received by the script.
 const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwjfZ8W_xLzeq6vT8paJfd4cPj_LjAVo7xojVBt7dp3dsO3lPuVstkbBZydh58DslmYoA/exec";
+  "https://script.google.com/macros/s/AKfycbzNYwij8rD-a8YLcrjAPYlgHhAkF1d1ETjU_BN8evDu9kqw8x9bY9DEcCmH8QnEsDFmwg/exec";
 
 type FormData = {
   name: string;
@@ -57,27 +51,24 @@ export function RegisterInterest() {
   const onSubmit = async (data: FormData) => {
     setSubmitError(null);
 
-    const payload = {
-      name: data.name,
-      email: data.email,
-      businessName: data.businessName,
-      primaryPlatform: data.platform,
-      monthlyDmVolume: data.dmVolume,
-      mainGoal: data.goal,
-      phone: data.phone ?? "",
-      submittedAt: new Date().toISOString(),
-    };
+    const formData = new window.FormData();
+    formData.append("submittedAt", new Date().toISOString());
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("businessName", data.businessName);
+    formData.append("primaryPlatform", data.platform);
+    formData.append("monthlyDmVolume", data.dmVolume);
+    formData.append("mainGoal", data.goal);
+    formData.append("phone", data.phone ?? "");
 
     try {
       await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: formData,
       });
       setSubmitted(true);
     } catch {
-      setSubmitError("Something went wrong — please try again or email us directly.");
+      setSubmitError("Something went wrong. Please try again or email fittriallabs@gmail.com");
     }
   };
 
