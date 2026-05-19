@@ -45,6 +45,7 @@ export function RegisterInterest() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
@@ -67,6 +68,10 @@ export function RegisterInterest() {
         body: formData,
       });
       setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        reset();
+      }, 4000);
     } catch {
       setSubmitError("Something went wrong. Please try again or email fittriallabs@gmail.com");
     }
