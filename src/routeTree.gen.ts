@@ -9,13 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsOfServiceRouteImport } from './routes/terms-of-service'
 import { Route as RegisterInterestRouteImport } from './routes/register-interest'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const TermsOfServiceRoute = TermsOfServiceRouteImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterInterestRoute = RegisterInterestRouteImport.update({
   id: '/register-interest',
   path: '/register-interest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,41 +43,79 @@ const ApiChatRoute = ApiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/register-interest': typeof RegisterInterestRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/register-interest': typeof RegisterInterestRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/register-interest': typeof RegisterInterestRoute
+  '/terms-of-service': typeof TermsOfServiceRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/register-interest' | '/api/chat'
+  fullPaths:
+    | '/'
+    | '/privacy-policy'
+    | '/register-interest'
+    | '/terms-of-service'
+    | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/register-interest' | '/api/chat'
-  id: '__root__' | '/' | '/register-interest' | '/api/chat'
+  to:
+    | '/'
+    | '/privacy-policy'
+    | '/register-interest'
+    | '/terms-of-service'
+    | '/api/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/privacy-policy'
+    | '/register-interest'
+    | '/terms-of-service'
+    | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   RegisterInterestRoute: typeof RegisterInterestRoute
+  TermsOfServiceRoute: typeof TermsOfServiceRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms-of-service': {
+      id: '/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof TermsOfServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register-interest': {
       id: '/register-interest'
       path: '/register-interest'
       fullPath: '/register-interest'
       preLoaderRoute: typeof RegisterInterestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,7 +137,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   RegisterInterestRoute: RegisterInterestRoute,
+  TermsOfServiceRoute: TermsOfServiceRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
