@@ -1,25 +1,9 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-
-const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzNYwij8rD-a8YLcrjAPYlgHhAkF1d1ETjU_BN8evDu9kqw8x9bY9DEcCmH8QnEsDFmwg/exec";
-
-type FormData = {
-  name: string;
-  email: string;
-  businessName: string;
-  platform: string;
-  dmVolume: string;
-  goal: string;
-  phone?: string;
-};
 
 const inputClass =
   "w-full bg-[rgba(30,27,75,0.3)] border border-[rgba(107,111,212,0.3)] rounded-lg px-4 py-3 text-white placeholder-[rgba(196,184,240,0.35)] focus:outline-none focus:border-[#6B6FD4] transition-colors text-sm";
 
 const labelClass = "font-mono-caps block mb-2";
-
-const errorClass = "mt-1 font-mono text-red-400" as string;
 
 const monoAccentLabel = {
   fontFamily: "var(--font-mono)",
@@ -40,40 +24,55 @@ const selectArrow = {
 
 export function RegisterInterest() {
   const [submitted, setSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const [primaryPlatform, setPrimaryPlatform] = useState("");
+  const [monthlyDmVolume, setMonthlyDmVolume] = useState("");
+  const [mainGoal, setMainGoal] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const onSubmit = async (data: FormData) => {
-    setSubmitError(null);
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setBusinessName("");
+    setPrimaryPlatform("");
+    setMonthlyDmVolume("");
+    setMainGoal("");
+    setPhone("");
+    setSubmitted(false);
+  };
 
-    const formData = new window.FormData();
-    formData.append("submittedAt", new Date().toISOString());
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("businessName", data.businessName);
-    formData.append("primaryPlatform", data.platform);
-    formData.append("monthlyDmVolume", data.dmVolume);
-    formData.append("mainGoal", data.goal);
-    formData.append("phone", data.phone ?? "");
+  const handleSubmit = async () => {
+    console.log('submitting form...');
+    const formData = new FormData();
+    formData.append('submittedAt', new Date().toISOString());
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('businessName', businessName);
+    formData.append('primaryPlatform', primaryPlatform);
+    formData.append('monthlyDmVolume', monthlyDmVolume);
+    formData.append('mainGoal', mainGoal);
+    formData.append('phone', phone || '');
 
+    console.log('posting to google sheets...');
+
+    setIsSubmitting(true);
     try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
+      await fetch('https://script.google.com/macros/s/AKfycbzNYwij8rD-a8YLcrjAPYlgHhAkF1d1ETjU_BN8evDu9kqw8x9bY9DEcCmH8QnEsDFmwg/exec', {
+        method: 'POST',
         body: formData,
       });
+      console.log('submitted successfully');
       setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        reset();
-      }, 4000);
-    } catch {
-      setSubmitError("Something went wrong. Please try again or email fittriallabs@gmail.com");
+      setTimeout(() => resetForm(), 5000);
+    } catch (err) {
+      console.error('submission error:', err);
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -260,6 +259,22 @@ export function RegisterInterest() {
                     good fit we&apos;ll reach out to schedule your onboarding call and
                     get your AI system running — at zero cost for 21 days.
                   </p>
+                  <button
+                    onClick={resetForm}
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.68rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.12em",
+                      color: "rgba(196,184,240,0.45)",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: 0,
+                    }}
+                  >
+                    ← Submit another
+                  </button>
                 </div>
               ) : (
                 /* ── FORM STATE ── */
@@ -271,7 +286,7 @@ export function RegisterInterest() {
                     </p>
                   </div>
 
-                  <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-4">
 
                     {/* NAME + EMAIL */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -281,9 +296,9 @@ export function RegisterInterest() {
                           type="text"
                           className={inputClass}
                           placeholder="Your name"
-                          {...register("name", { required: "Required" })}
+                          value={name}
+                          onChange={e => setName(e.target.value)}
                         />
-                        {errors.name && <p className={errorClass} style={{ fontSize: "0.7rem" }}>{errors.name.message}</p>}
                       </div>
                       <div>
                         <label className={labelClass}>EMAIL *</label>
@@ -291,12 +306,9 @@ export function RegisterInterest() {
                           type="email"
                           className={inputClass}
                           placeholder="you@business.com"
-                          {...register("email", {
-                            required: "Required",
-                            pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email" },
-                          })}
+                          value={email}
+                          onChange={e => setEmail(e.target.value)}
                         />
-                        {errors.email && <p className={errorClass} style={{ fontSize: "0.7rem" }}>{errors.email.message}</p>}
                       </div>
                     </div>
 
@@ -308,16 +320,17 @@ export function RegisterInterest() {
                           type="text"
                           className={inputClass}
                           placeholder="Your business"
-                          {...register("businessName", { required: "Required" })}
+                          value={businessName}
+                          onChange={e => setBusinessName(e.target.value)}
                         />
-                        {errors.businessName && <p className={errorClass} style={{ fontSize: "0.7rem" }}>{errors.businessName.message}</p>}
                       </div>
                       <div>
                         <label className={labelClass}>PRIMARY PLATFORM *</label>
                         <select
                           className={inputClass}
                           style={selectArrow}
-                          {...register("platform", { required: "Required" })}
+                          value={primaryPlatform}
+                          onChange={e => setPrimaryPlatform(e.target.value)}
                         >
                           <option value="" style={{ background: "#1E1B4B" }}>Select platform</option>
                           <option value="Instagram" style={{ background: "#1E1B4B" }}>Instagram</option>
@@ -327,7 +340,6 @@ export function RegisterInterest() {
                           <option value="Telegram" style={{ background: "#1E1B4B" }}>Telegram</option>
                           <option value="Multiple" style={{ background: "#1E1B4B" }}>Multiple</option>
                         </select>
-                        {errors.platform && <p className={errorClass} style={{ fontSize: "0.7rem" }}>{errors.platform.message}</p>}
                       </div>
                     </div>
 
@@ -337,7 +349,8 @@ export function RegisterInterest() {
                       <select
                         className={inputClass}
                         style={selectArrow}
-                        {...register("dmVolume", { required: "Required" })}
+                        value={monthlyDmVolume}
+                        onChange={e => setMonthlyDmVolume(e.target.value)}
                       >
                         <option value="" style={{ background: "#1E1B4B" }}>Select volume</option>
                         <option value="Under 100" style={{ background: "#1E1B4B" }}>Under 100</option>
@@ -345,7 +358,6 @@ export function RegisterInterest() {
                         <option value="500–2,000" style={{ background: "#1E1B4B" }}>500–2,000</option>
                         <option value="2,000+" style={{ background: "#1E1B4B" }}>2,000+</option>
                       </select>
-                      {errors.dmVolume && <p className={errorClass} style={{ fontSize: "0.7rem" }}>{errors.dmVolume.message}</p>}
                     </div>
 
                     {/* MAIN GOAL */}
@@ -355,9 +367,9 @@ export function RegisterInterest() {
                         className={inputClass}
                         style={{ resize: "vertical", minHeight: "88px" }}
                         placeholder="e.g. convert more DMs, stop missing leads, scale without hiring..."
-                        {...register("goal", { required: "Required" })}
+                        value={mainGoal}
+                        onChange={e => setMainGoal(e.target.value)}
                       />
-                      {errors.goal && <p className={errorClass} style={{ fontSize: "0.7rem" }}>{errors.goal.message}</p>}
                     </div>
 
                     {/* PHONE */}
@@ -372,29 +384,15 @@ export function RegisterInterest() {
                         type="tel"
                         className={inputClass}
                         placeholder="+971 50 000 0000"
-                        {...register("phone")}
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
                       />
                     </div>
 
-                    {/* ERROR MESSAGE */}
-                    {submitError && (
-                      <p
-                        className="text-sm rounded-lg px-4 py-3"
-                        style={{
-                          color: "#fca5a5",
-                          background: "rgba(239,68,68,0.08)",
-                          border: "1px solid rgba(239,68,68,0.25)",
-                          fontFamily: "var(--font-mono)",
-                          fontSize: "0.72rem",
-                        }}
-                      >
-                        {submitError}
-                      </p>
-                    )}
-
                     {/* SUBMIT */}
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={handleSubmit}
                       disabled={isSubmitting}
                       className="btn-primary w-full justify-center mt-1"
                       style={{
@@ -406,7 +404,7 @@ export function RegisterInterest() {
                     >
                       {isSubmitting ? "Submitting…" : "Claim My Free 21 Days"}
                     </button>
-                  </form>
+                  </div>
                 </>
               )}
 
