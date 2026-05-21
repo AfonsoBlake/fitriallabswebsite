@@ -1,9 +1,9 @@
 import { Reveal } from "./Reveal";
 
 const items = [
-  { n: "01", t: "DM Automation", d: "AI responds to every inbound message instantly — no delays, no missed leads, no human required." },
-  { n: "02", t: "Lead Qualification", d: "Smart filtering separates serious buyers from tire-kickers using your exact qualification criteria." },
-  { n: "03", t: "Funneling Prospects", d: "Interested prospects become leads through a psychology-backed flow that funnels deeper to achieve your first CTA." },
+  { n: "01", t: "DM Automation", d: "AI responds to every inbound message instantly. No delays, no missed leads, no human required." },
+  { n: "02", t: "Trust-First Conversations", d: "Our AI doesn't pitch, it connects. Every reply is personalised to make the prospect feel heard, understood, and confident in your brand." },
+  { n: "03", t: "Funneling Prospects", d: "Once trust is built, our AI gently guides prospects toward your main CTA. No hard selling, no pressure. Just a natural flow that converts." },
   { n: "04", t: "Multi-Platform Coverage", d: "One AI agent. Three platforms. Instagram, TikTok, and Facebook DMs covered simultaneously." },
   { n: "05", t: "Campaign Sequences", d: "Automated follow-up sequences that re-engage cold leads and turn silence into sales conversations." },
   { n: "06", t: "Analytics & Reporting", d: "Real-time dashboards showing message volume, qualification rates, bookings, and revenue attribution." },
