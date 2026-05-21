@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 
 /* ── ticker words ── */
-const WORDS = ["HIGH TICKET", "BRANDS", "AMBITION", "FOCUS", "CONVERT", "ELEVATE", "FLOW", "PRIORITISE"];
+const WORDS = ["SCALE", "CONVERT", "AUTOMATE", "PRECISION", "REVENUE", "FLOW", "VELOCITY", "LEVERAGE", "IMPACT", "FOCUS", "PRIORITISE"];
 const ACCENT = "#6B6FD4";
 
 function TickerRow({ direction }: { direction: "left" | "right" }) {

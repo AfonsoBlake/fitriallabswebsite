@@ -5,28 +5,30 @@ import { ChevronLeft, Phone, Video, Camera, Mic, Image as ImageIcon, Smile, Hear
 const SENT_GRADIENT = "linear-gradient(135deg, #4F5BD5 0%, #962FBF 55%, #D62976 100%)";
 
 type Step =
-  | "m0" | "t1" | "m1"
+  | "m0" | "t1" | "m1" | "t1b" | "m1b"
   | "m2" | "t2" | "m3" | "c1"
   | "m4" | "t3" | "m5"
   | "m6" | "t4" | "m7"
   | "badge";
 
-// every step exactly 5000ms apart; last message at 65300ms + 3000ms pause = 68300ms loop
+// m1 → 500ms → t1b (typing) → 2000ms → m1b (second bubble)
 const SCHEDULE: { at: number; visible: Step[] }[] = [
   { at: 300,   visible: ["m0"] },
   { at: 5300,  visible: ["m0", "t1"] },
   { at: 10300, visible: ["m0", "m1"] },
-  { at: 15300, visible: ["m0", "m1", "m2"] },
-  { at: 20300, visible: ["m0", "m1", "m2", "t2"] },
-  { at: 25300, visible: ["m0", "m1", "m2", "m3"] },
-  { at: 30300, visible: ["m0", "m1", "m2", "m3", "c1"] },
-  { at: 35300, visible: ["m0", "m1", "m2", "m3", "c1", "m4"] },
-  { at: 40300, visible: ["m0", "m1", "m2", "m3", "c1", "m4", "t3"] },
-  { at: 45300, visible: ["m0", "m1", "m2", "m3", "c1", "m4", "m5"] },
-  { at: 50300, visible: ["m0", "m1", "m2", "m3", "c1", "m4", "m5", "m6"] },
-  { at: 55300, visible: ["m0", "m1", "m2", "m3", "c1", "m4", "m5", "m6", "t4"] },
-  { at: 60300, visible: ["m0", "m1", "m2", "m3", "c1", "m4", "m5", "m6", "m7"] },
-  { at: 61100, visible: ["m0", "m1", "m2", "m3", "c1", "m4", "m5", "m6", "m7", "badge"] },
+  { at: 10800, visible: ["m0", "m1", "t1b"] },
+  { at: 12800, visible: ["m0", "m1", "m1b"] },
+  { at: 15300, visible: ["m0", "m1", "m1b", "m2"] },
+  { at: 20300, visible: ["m0", "m1", "m1b", "m2", "t2"] },
+  { at: 25300, visible: ["m0", "m1", "m1b", "m2", "m3"] },
+  { at: 30300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1"] },
+  { at: 35300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4"] },
+  { at: 40300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "t3"] },
+  { at: 45300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5"] },
+  { at: 50300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5", "m6"] },
+  { at: 55300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5", "m6", "t4"] },
+  { at: 60300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5", "m6", "m7"] },
+  { at: 61100, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5", "m6", "m7", "badge"] },
 ];
 const LOOP_MS = 63300;
 
@@ -172,12 +174,30 @@ export function PhoneDemoBioSkin() {
                     </motion.div>
                   )}
 
-                  {/* AI: Amy intro */}
+                  {/* AI: Amy intro — bubble 1 */}
                   {has("m1") && (
                     <motion.div key="m1" {...fade} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
                       <BSAvatar size={22} />
                       <div style={{ maxWidth: "78%", background: "#262626", color: "#fff", padding: "8px 12px", borderRadius: "20px 20px 20px 5px", fontSize: 13, lineHeight: 1.5 }}>
-                        Hey wonderful, it's Amy here! Yes we offer organic ingredients straight from Argentina, no parabens, synthetic fragrance or any nasty stuff! Your skin is our priority 💝
+                        Hey wonderful, it's Amy here! Yes we offer organic ingredients straight from Argentina, no parabens, synthetic fragrance or any nasty stuff!
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Typing between bubble 1 and 2 */}
+                  {has("t1b") && (
+                    <motion.div key="t1b" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
+                      <BSAvatar size={22} />
+                      <TypingDots />
+                    </motion.div>
+                  )}
+
+                  {/* AI: Amy intro — bubble 2 */}
+                  {has("m1b") && (
+                    <motion.div key="m1b" {...fade} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
+                      <BSAvatar size={22} />
+                      <div style={{ maxWidth: "78%", background: "#262626", color: "#fff", padding: "8px 12px", borderRadius: "20px 20px 20px 5px", fontSize: 13, lineHeight: 1.5 }}>
+                        Your skin is our priority 💝
                       </div>
                     </motion.div>
                   )}

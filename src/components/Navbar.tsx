@@ -2,11 +2,36 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 
-const links = [
-  { hash: "how-it-works", label: "How It Works" },
-  { hash: "services", label: "Services" },
-  { hash: "pricing", label: "Pricing" },
+type NavLink =
+  | { kind: "route"; to: string; label: string }
+  | { kind: "hash"; hash: string; label: string };
+
+const links: NavLink[] = [
+  { kind: "route", to: "/how-it-works", label: "How It Works" },
+  { kind: "hash", hash: "services", label: "Services" },
+  { kind: "hash", hash: "pricing", label: "Pricing" },
 ];
+
+function NavLinkItem({ link, onClick }: { link: NavLink; onClick?: () => void }) {
+  const cls = "font-mono-caps text-white transition-colors hover:text-[#6B6FD4]";
+  if (link.kind === "route") {
+    return (
+      <Link
+        to={link.to}
+        onClick={onClick}
+        className={cls}
+        activeProps={{ className: "font-mono-caps text-[#6B6FD4] transition-colors hover:text-[#8B8FE8]" }}
+      >
+        {link.label}
+      </Link>
+    );
+  }
+  return (
+    <Link to="/" hash={link.hash} onClick={onClick} className={cls}>
+      {link.label}
+    </Link>
+  );
+}
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -18,9 +43,7 @@ export function Navbar() {
         </Link>
         <div className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
-            <Link key={l.hash} to="/" hash={l.hash} className="font-mono-caps text-white transition-colors hover:text-[#6B6FD4]">
-              {l.label}
-            </Link>
+            <NavLinkItem key={l.label} link={l} />
           ))}
           <Link
             to="/register-interest"
@@ -39,7 +62,7 @@ export function Navbar() {
       {open && (
         <div className="md:hidden border-t border-[rgba(107,111,212,0.2)] px-6 py-4 flex flex-col gap-4">
           {links.map((l) => (
-            <Link key={l.hash} to="/" hash={l.hash} onClick={() => setOpen(false)} className="font-mono-caps text-white">{l.label}</Link>
+            <NavLinkItem key={l.label} link={l} onClick={() => setOpen(false)} />
           ))}
           <Link
             to="/register-interest"
