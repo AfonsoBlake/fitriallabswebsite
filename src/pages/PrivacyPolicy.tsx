@@ -131,8 +131,8 @@ export function PrivacyPolicy() {
         </ul>
         <p style={bodyStyle} className="mt-4">
           To exercise any of these rights, contact us at{" "}
-          <a href="mailto:fittriallabs@gmail.com" style={{ color: "#6B6FD4" }}>
-            fittriallabs@gmail.com
+          <a href="mailto:fluario.tech@gmail.com" style={{ color: "#6B6FD4" }}>
+            fluario.tech@gmail.com
           </a>
         </p>
 
@@ -174,8 +174,8 @@ export function PrivacyPolicy() {
         <p style={bodyStyle}>For any privacy-related questions or requests:</p>
         <p style={bodyStyle} className="mt-2">
           Email:{" "}
-          <a href="mailto:fittriallabs@gmail.com" style={{ color: "#6B6FD4" }}>
-            fittriallabs@gmail.com
+          <a href="mailto:fluario.tech@gmail.com" style={{ color: "#6B6FD4" }}>
+            fluario.tech@gmail.com
           </a>
         </p>
 

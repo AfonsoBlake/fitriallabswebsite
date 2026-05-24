@@ -175,8 +175,8 @@ export function TermsOfService() {
         <p style={bodyStyle}>For any questions regarding these terms:</p>
         <p style={bodyStyle} className="mt-2">
           Email:{" "}
-          <a href="mailto:fittriallabs@gmail.com" style={{ color: "#6B6FD4" }}>
-            fittriallabs@gmail.com
+          <a href="mailto:fluario.tech@gmail.com" style={{ color: "#6B6FD4" }}>
+            fluario.tech@gmail.com
           </a>
         </p>
 
