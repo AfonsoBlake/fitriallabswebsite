@@ -21,7 +21,7 @@ const steps = [
   {
     n: "03",
     t: "IT RUNS. YOU SCALE.",
-    d: "Your AI handles every DM — qualifying leads, answering questions, booking calls, and escalating to your team when humans are needed. All bookings, conversations, and analytics live in your dedicated client dashboard.",
+    d: "Your AI handles every DM - qualifying leads, answering questions, booking calls, and escalating to your team when humans are needed. All bookings, conversations, and analytics live in your dedicated client dashboard.",
   },
 ];
 

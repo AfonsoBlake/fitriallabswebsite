@@ -5,32 +5,31 @@ import { ChevronLeft, Phone, Video, Camera, Mic, Image as ImageIcon, Smile, Hear
 const SENT_GRADIENT = "linear-gradient(135deg, #4F5BD5 0%, #962FBF 55%, #D62976 100%)";
 
 type Step =
-  | "m0" | "t1" | "m1" | "t1b" | "m1b"
-  | "m2" | "t2" | "m3" | "c1"
-  | "m4" | "t3" | "m5"
+  | "m0" | "t1" | "m1"
+  | "m2" | "t2" | "m3"
+  | "m4" | "t3" | "m5" | "t3b" | "m1b"
   | "m6" | "t4" | "m7"
   | "badge";
 
-// m1 → 500ms → t1b (typing) → 2000ms → m1b (second bubble)
+// m5 → 500ms → t3b (typing) → 2000ms → m1b (second bubble)
 const SCHEDULE: { at: number; visible: Step[] }[] = [
   { at: 300,   visible: ["m0"] },
   { at: 5300,  visible: ["m0", "t1"] },
   { at: 10300, visible: ["m0", "m1"] },
-  { at: 10800, visible: ["m0", "m1", "t1b"] },
-  { at: 12800, visible: ["m0", "m1", "m1b"] },
-  { at: 15300, visible: ["m0", "m1", "m1b", "m2"] },
-  { at: 20300, visible: ["m0", "m1", "m1b", "m2", "t2"] },
-  { at: 25300, visible: ["m0", "m1", "m1b", "m2", "m3"] },
-  { at: 30300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1"] },
-  { at: 35300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4"] },
-  { at: 40300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "t3"] },
-  { at: 45300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5"] },
-  { at: 50300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5", "m6"] },
-  { at: 55300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5", "m6", "t4"] },
-  { at: 60300, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5", "m6", "m7"] },
-  { at: 61100, visible: ["m0", "m1", "m1b", "m2", "m3", "c1", "m4", "m5", "m6", "m7", "badge"] },
+  { at: 15300, visible: ["m0", "m1", "m2"] },
+  { at: 20300, visible: ["m0", "m1", "m2", "t2"] },
+  { at: 25300, visible: ["m0", "m1", "m2", "m3"] },
+  { at: 30300, visible: ["m0", "m1", "m2", "m3", "m4"] },
+  { at: 35300, visible: ["m0", "m1", "m2", "m3", "m4", "t3"] },
+  { at: 40300, visible: ["m0", "m1", "m2", "m3", "m4", "m5"] },
+  { at: 40800, visible: ["m0", "m1", "m2", "m3", "m4", "m5", "t3b"] },
+  { at: 42800, visible: ["m0", "m1", "m2", "m3", "m4", "m5", "m1b"] },
+  { at: 45300, visible: ["m0", "m1", "m2", "m3", "m4", "m5", "m1b", "m6"] },
+  { at: 50300, visible: ["m0", "m1", "m2", "m3", "m4", "m5", "m1b", "m6", "t4"] },
+  { at: 55300, visible: ["m0", "m1", "m2", "m3", "m4", "m5", "m1b", "m6", "m7"] },
+  { at: 56100, visible: ["m0", "m1", "m2", "m3", "m4", "m5", "m1b", "m6", "m7", "badge"] },
 ];
-const LOOP_MS = 63300;
+const LOOP_MS = 58100;
 
 function BSAvatar({ size }: { size: number }) {
   return (
@@ -174,30 +173,12 @@ export function PhoneDemoBioSkin() {
                     </motion.div>
                   )}
 
-                  {/* AI: Amy intro — bubble 1 */}
+                  {/* AI: Amy welcome */}
                   {has("m1") && (
                     <motion.div key="m1" {...fade} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
                       <BSAvatar size={22} />
                       <div style={{ maxWidth: "78%", background: "#262626", color: "#fff", padding: "8px 12px", borderRadius: "20px 20px 20px 5px", fontSize: 13, lineHeight: 1.5 }}>
-                        Hey wonderful, it's Amy here! Yes we offer organic ingredients straight from Argentina, no parabens, synthetic fragrance or any nasty stuff!
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* Typing between bubble 1 and 2 */}
-                  {has("t1b") && (
-                    <motion.div key="t1b" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
-                      <BSAvatar size={22} />
-                      <TypingDots />
-                    </motion.div>
-                  )}
-
-                  {/* AI: Amy intro — bubble 2 */}
-                  {has("m1b") && (
-                    <motion.div key="m1b" {...fade} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
-                      <BSAvatar size={22} />
-                      <div style={{ maxWidth: "78%", background: "#262626", color: "#fff", padding: "8px 12px", borderRadius: "20px 20px 20px 5px", fontSize: 13, lineHeight: 1.5 }}>
-                        Your skin is our priority 💝
+                        Yes! Everything we use is 100% organic - no parabens, no synthetic fragrance, nothing nasty 🌿 What product were you curious about?
                       </div>
                     </motion.div>
                   )}
@@ -219,30 +200,12 @@ export function PhoneDemoBioSkin() {
                     </motion.div>
                   )}
 
-                  {/* AI: product range + URL + teaser */}
+                  {/* AI: price reply */}
                   {has("m3") && (
                     <motion.div key="m3" {...fade} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
                       <BSAvatar size={22} />
                       <div style={{ maxWidth: "78%", background: "#262626", color: "#fff", padding: "8px 12px", borderRadius: "20px 20px 20px 5px", fontSize: 13, lineHeight: 1.55 }}>
-                        My pleasure 😄<br /><br />
-                        We offer a wide range of skin care products to make your face glow and shine!<br /><br />
-                        May I ask what skin care product you're looking for?<br />
-                        If you are unsure here is our website to help you:{" "}
-                        <a href="https://site.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#58a6ff", textDecoration: "underline" }}>
-                          https://site.com/
-                        </a><br /><br />
-                        Perhaps you are interested in our Anti Aging Face Oil, it's on offer at the moment!
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* Product card */}
-                  {has("c1") && (
-                    <motion.div key="c1" {...fade} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
-                      <div style={{ width: 22, flexShrink: 0 }} />
-                      <div style={{ width: "72%", background: "#262626", borderRadius: 14, overflow: "hidden" }}>
-                        <img src="/images/bioskin-product.jpg" alt="RENEW — Anti Aging Face Oil" style={{ width: "100%", height: 120, objectFit: "cover", display: "block" }} />
-                        <p style={{ color: "#fff", fontSize: 12, fontWeight: 700, margin: 0, padding: "7px 10px 8px", letterSpacing: "0.4px" }}>RENEW — Anti Aging Face Oil</p>
+                        Depends what you're after! What product were you thinking about? I'll give you the exact price 😄
                       </div>
                     </motion.div>
                   )}
@@ -264,17 +227,30 @@ export function PhoneDemoBioSkin() {
                     </motion.div>
                   )}
 
-                  {/* AI: order + discount code */}
+                  {/* AI: order reply — bubble 1 */}
                   {has("m5") && (
                     <motion.div key="m5" {...fade} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
                       <BSAvatar size={22} />
                       <div style={{ maxWidth: "78%", background: "#262626", color: "#fff", padding: "8px 12px", borderRadius: "20px 20px 20px 5px", fontSize: 13, lineHeight: 1.55 }}>
-                        Absolutely that's a great choice! You can order it by clicking the 'purchase' button on our website. I don't usually give these out but here is a small gift...<br /><br />
-                        Use code:{" "}
-                        <span style={{ background: "rgba(255,255,255,0.15)", padding: "1px 6px", borderRadius: 4, fontFamily: "monospace", fontWeight: 700 }}>
-                          biocare2026
-                        </span>
-                        {" "}and you'll get an extra one for free as a complementary gift for our first beautiful customers 💝
+                        Love that one! Order straight from the site and use biocare2026 at checkout, you get a free one on us 💝
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Typing between order bubble 1 and 2 */}
+                  {has("t3b") && (
+                    <motion.div key="t3b" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
+                      <BSAvatar size={22} />
+                      <TypingDots />
+                    </motion.div>
+                  )}
+
+                  {/* AI: order reply — bubble 2 */}
+                  {has("m1b") && (
+                    <motion.div key="m1b" {...fade} style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-end", gap: 5 }}>
+                      <BSAvatar size={22} />
+                      <div style={{ maxWidth: "78%", background: "#262626", color: "#fff", padding: "8px 12px", borderRadius: "20px 20px 20px 5px", fontSize: 13, lineHeight: 1.5 }}>
+                        Your skin is our priority 💝
                       </div>
                     </motion.div>
                   )}

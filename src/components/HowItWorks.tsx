@@ -1,4 +1,11 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import { Reveal } from "./Reveal";
+gsap.registerPlugin(ScrollTrigger);
+
+const ACCENT = "#6B6FD4";
+const LAVENDER = "#C4B8F0";
 
 const steps = [
   { n: "01", t: "ONBOARDING CALL", d: "We get on a 10-minute call to learn your business: your brand tone, offer, platforms, and how you want leads handled. Everything we collect builds a personalised framework, not a generic template. Engineered to scale, backed by 5 months of research and real-world testing to make every interaction as psychologically optimised for conversion as possible." },
@@ -7,23 +14,91 @@ const steps = [
 ];
 
 export function HowItWorks() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
+    const ctx = gsap.context(() => {
+      const scrollAmount = track.scrollWidth - section.offsetWidth;
+
+      gsap.to(track, {
+        x: -scrollAmount,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${scrollAmount}`,
+          pin: true,
+          scrub: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="how-it-works" className="section-pad" style={{ background: "#1E1B4B" }}>
-      <div className="mx-auto max-w-[1400px]">
+    <section
+      id="how-it-works"
+      ref={sectionRef}
+      style={{
+        background: "#1E1B4B",
+        overflow: "hidden",
+        position: "relative",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingTop: "5rem",
+        paddingBottom: "5rem",
+      }}
+    >
+      <div style={{ paddingLeft: "clamp(1.5rem, 6vw, 6rem)", marginBottom: "3rem" }}>
         <Reveal>
-          <h2 className="text-4xl md:text-5xl">Three steps. <span className="glow">Infinite scale.</span></h2>
+          <h2 className="text-4xl md:text-5xl">
+            Three steps.{" "}
+            <span className="glow">Infinite scale.</span>
+          </h2>
         </Reveal>
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          {steps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 0.1}>
-              <div className="card-fluario h-full">
-                <div className="text-6xl font-bold" style={{ color: "#6B6FD4", fontFamily: "var(--font-display)" }}>{s.n}</div>
-                <h3 className="mt-4 text-2xl text-white">{s.t}</h3>
-                <p className="mt-3" style={{ color: "#C4B8F0" }}>{s.d}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+      </div>
+
+      <div
+        ref={trackRef}
+        style={{
+          display: "flex",
+          gap: "2rem",
+          paddingLeft: "clamp(1.5rem, 6vw, 6rem)",
+          paddingRight: "clamp(1.5rem, 6vw, 6rem)",
+          willChange: "transform",
+        }}
+      >
+        {steps.map((s) => (
+          <div
+            key={s.n}
+            className="card-fluario"
+            style={{
+              flexShrink: 0,
+              width: "clamp(300px, 45vw, 580px)",
+            }}
+          >
+            <div
+              className="text-6xl font-bold"
+              style={{ color: ACCENT, fontFamily: "var(--font-display)" }}
+            >
+              {s.n}
+            </div>
+            <h3 className="mt-4 text-2xl text-white">{s.t}</h3>
+            <p className="mt-3" style={{ color: LAVENDER, lineHeight: 1.7 }}>
+              {s.d}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );

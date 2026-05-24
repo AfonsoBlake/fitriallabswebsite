@@ -10,6 +10,7 @@ const links: NavLink[] = [
   { kind: "route", to: "/how-it-works", label: "How It Works" },
   { kind: "hash", hash: "services", label: "Services" },
   { kind: "hash", hash: "pricing", label: "Pricing" },
+  { kind: "route", to: "/free-resources", label: "Free Resources" },
 ];
 
 function NavLinkItem({ link, onClick }: { link: NavLink; onClick?: () => void }) {
