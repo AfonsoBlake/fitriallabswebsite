@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Mail, Instagram } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 const ACCENT = "#6B6FD4";
 const LAVENDER = "#C4B8F0";
@@ -64,7 +64,13 @@ export function NotifyModal({ open, onClose }: Props) {
     }
     setError("");
     setLoading(true);
-    const { error: dbErr } = await supabase
+    const sb = getSupabase();
+    if (!sb) {
+      setError("Something went wrong. Please try again.");
+      setLoading(false);
+      return;
+    }
+    const { error: dbErr } = await sb
       .from("notify_list")
       .insert({ email: email.trim(), instagram: instagramSelected });
     setLoading(false);
