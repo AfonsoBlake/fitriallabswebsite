@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { NotifyModal } from "@/components/NotifyModal";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { Reveal } from "@/components/Reveal";
@@ -10,62 +11,30 @@ gsap.registerPlugin(ScrollTrigger);
 const ACCENT = "#6B6FD4";
 const LAVENDER = "#C4B8F0";
 
-const resources = [
+const resources: { title: string; description: string[]; button: string; href: string }[] = [
   {
-    category: "GUIDE",
     title: "The Instant Reply Playbook",
-    description:
-      "Why speed kills or wins the sale — and the exact response structure we use to convert cold DMs into booked calls.",
-    button: "Read Guide",
+    description: [
+      "Ever stuck knowing what to reply?",
+      "Fluario's research team found the top 3 replies most likely to get a response back.",
+      "Covering the 16 most frequently asked questions businesses get in their DMs.",
+    ],
+    button: "Read Playbook",
+    href: "https://drive.google.com/file/d/1qsk-eJxWtZXNCR_lOJgvC4zvmas6yCJQ/view?usp=sharing",
   },
   {
-    category: "CHECKLIST",
-    title: "DM Audit Checklist",
-    description:
-      "10 questions to identify exactly where your business is losing leads in the DMs right now.",
-    button: "Download",
-  },
-  {
-    category: "BREAKDOWN",
-    title: "Why Most Businesses Lose 60% of Their DM Leads",
-    description:
-      "A data-backed breakdown of the most common DM mistakes and how to fix them without hiring more staff.",
-    button: "Read Breakdown",
-  },
-  {
-    category: "TEMPLATE",
-    title: "High-Converting DM Opener Templates",
-    description:
-      "5 proven opening messages that start conversations rather than killing them — for any business type.",
-    button: "Download",
-  },
-  {
-    category: "GUIDE",
     title: "Instagram DM Automation: What Works in 2026",
-    description:
-      "A no-fluff guide to what AI DM automation can and cannot do — and how to set it up to actually convert.",
-    button: "Read Guide",
-  },
-  {
-    category: "FRAMEWORK",
-    title: "The Trust-First Funnel",
-    description:
-      "The psychology-backed conversation framework Fluario uses to move prospects from cold DM to booked call without ever feeling pushy.",
-    button: "Read Framework",
+    description: [
+      "DM automation has been around for years. Most businesses are still doing it wrong. This report covers where it started, where it is now, and where it's going. It breaks down why keyword flows fail, why email is losing the attention war, and what the data actually says when you stack DM automation against every other channel. Real research. No fluff. Built for businesses serious about their DMs.",
+    ],
+    button: "Read Report",
+    href: "https://drive.google.com/file/d/1KEoG1uc_JG9lKYpAdnzL2JKPvTy7BlO1/view?usp=sharing",
   },
 ];
 
-function handleResourceClick() {
-  toast("Coming soon — register your interest to get early access", {
-    style: {
-      background: "rgba(30,27,75,0.95)",
-      border: "1px solid rgba(107,111,212,0.4)",
-      color: "#C4B8F0",
-    },
-  });
-}
 
 export function FreeResourcesPage() {
+  const [modalOpen, setModalOpen] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -76,6 +45,7 @@ export function FreeResourcesPage() {
 
     const ctx = gsap.context(() => {
       const scrollAmount = track.scrollWidth - section.offsetWidth;
+      if (scrollAmount <= 0) return;
 
       gsap.to(track, {
         x: -scrollAmount,
@@ -165,7 +135,7 @@ export function FreeResourcesPage() {
               The library
             </p>
             <h2 className="text-4xl md:text-5xl">
-              Six resources.{" "}
+              Two resources.{" "}
               <span className="glow">No gatekeeping.</span>
             </h2>
           </Reveal>
@@ -187,23 +157,11 @@ export function FreeResourcesPage() {
               className="card-fluario"
               style={{
                 flexShrink: 0,
-                width: 400,
+                width: "clamp(320px, 60vw, 800px)",
                 display: "flex",
                 flexDirection: "column",
               }}
             >
-              <span
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.68rem",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  color: ACCENT,
-                  fontWeight: 600,
-                }}
-              >
-                {res.category}
-              </span>
               <h3
                 style={{
                   fontFamily: "var(--font-display)",
@@ -212,37 +170,120 @@ export function FreeResourcesPage() {
                   color: "#FFFFFF",
                   textTransform: "uppercase",
                   letterSpacing: "-0.01em",
-                  marginTop: "0.75rem",
                   lineHeight: 1.25,
                 }}
               >
                 {res.title}
               </h3>
-              <p
-                style={{
-                  color: LAVENDER,
-                  lineHeight: 1.7,
-                  fontSize: "0.9rem",
-                  marginTop: "0.75rem",
-                  flex: 1,
-                }}
-              >
-                {res.description}
-              </p>
-              <button
-                onClick={handleResourceClick}
+              <div style={{ flex: 1, marginTop: "0.75rem" }}>
+                {res.description.map((line, j) => (
+                  <p
+                    key={j}
+                    style={{
+                      color: LAVENDER,
+                      lineHeight: 1.7,
+                      fontSize: "0.9rem",
+                      marginTop: j > 0 ? "0.75rem" : 0,
+                    }}
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
+              <a
+                href={res.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-secondary"
                 style={{
                   marginTop: "1.5rem",
                   fontSize: "0.8rem",
                   padding: "0.65rem 1.5rem",
                   alignSelf: "flex-start",
+                  display: "inline-block",
                 }}
               >
                 {res.button}
-              </button>
+              </a>
             </div>
           ))}
+
+          {/* ── Coming soon card ── */}
+          <div
+            className="card-fluario"
+            style={{
+              flexShrink: 0,
+              width: "clamp(320px, 60vw, 800px)",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {/* Pulsing dots graphic */}
+            <div style={{ position: "relative", height: 96, marginBottom: "1.75rem" }}>
+              {[
+                { size: 10, left: "50%", top: "50%", delay: 0 },
+                { size: 6,  left: "34%", top: "42%", delay: 0.5 },
+                { size: 8,  left: "66%", top: "55%", delay: 0.9 },
+                { size: 4,  left: "22%", top: "60%", delay: 1.3 },
+                { size: 5,  left: "78%", top: "35%", delay: 0.7 },
+                { size: 3,  left: "58%", top: "25%", delay: 1.6 },
+              ].map((dot, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ opacity: [0.25, 0.8, 0.25], scale: [0.85, 1.25, 0.85] }}
+                  transition={{ duration: 2.8, repeat: Infinity, delay: dot.delay, ease: "easeInOut" }}
+                  style={{
+                    position: "absolute",
+                    left: dot.left,
+                    top: dot.top,
+                    transform: "translate(-50%, -50%)",
+                    width: dot.size,
+                    height: dot.size,
+                    borderRadius: "50%",
+                    background: ACCENT,
+                    boxShadow: `0 0 ${dot.size * 3}px ${ACCENT}99`,
+                  }}
+                />
+              ))}
+            </div>
+
+            <h3
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 900,
+                fontSize: "1.2rem",
+                color: "#FFFFFF",
+                textTransform: "uppercase",
+                letterSpacing: "-0.01em",
+                lineHeight: 1.25,
+              }}
+            >
+              More resources on the way.
+            </h3>
+            <p
+              style={{
+                color: LAVENDER,
+                lineHeight: 1.7,
+                fontSize: "0.9rem",
+                marginTop: "0.75rem",
+                flex: 1,
+              }}
+            >
+              Playbooks, templates, and reports dropping soon.
+            </p>
+            <button
+              onClick={() => setModalOpen(true)}
+              className="btn-secondary"
+              style={{
+                marginTop: "1.5rem",
+                fontSize: "0.8rem",
+                padding: "0.65rem 1.5rem",
+                alignSelf: "flex-start",
+              }}
+            >
+              Notify me for future resources
+            </button>
+          </div>
         </div>
       </section>
 
@@ -285,6 +326,7 @@ export function FreeResourcesPage() {
           </Reveal>
         </div>
       </section>
+      <NotifyModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }
