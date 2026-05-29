@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import IntroOverlay from '../components/IntroOverlay'
+import QuizModal from '../components/QuizModal'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -70,12 +72,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000
+
+function shouldShowQuiz(): boolean {
+  const raw = localStorage.getItem('fluario_quiz_done')
+  if (!raw) return true
+  const ts = Number(raw)
+  if (Date.now() - ts < THIRTY_DAYS_MS) return false
+  localStorage.removeItem('fluario_quiz_done')
+  return true
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [quizVisible, setQuizVisible] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <IntroOverlay />
+      <IntroOverlay onDone={() => { if (shouldShowQuiz()) setQuizVisible(true) }} />
+      {quizVisible && <QuizModal onClose={() => setQuizVisible(false)} />}
       <Outlet />
     </QueryClientProvider>
   );

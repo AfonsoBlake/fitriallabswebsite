@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react'
 
+interface IntroOverlayProps {
+  onDone?: () => void
+}
+
 interface Particle {
   sx: number; sy: number
   vx: number; vy: number
@@ -23,13 +27,15 @@ const SPARKLES = [
 
 const MAX_PARTICLES = 1500
 
-export default function IntroOverlay() {
+export default function IntroOverlay({ onDone }: IntroOverlayProps) {
   const overlayRef  = useRef<HTMLDivElement>(null)
   const sparklesRef = useRef<HTMLDivElement>(null)
   const logoRef     = useRef<HTMLImageElement>(null)
   const canvasRef   = useRef<HTMLCanvasElement>(null)
   const rafRef      = useRef<number>(0)
   const doneRef     = useRef(false)
+  const onDoneRef   = useRef(onDone)
+  onDoneRef.current = onDone
 
   useEffect(() => {
     const overlay = overlayRef.current
@@ -52,6 +58,7 @@ export default function IntroOverlay() {
       cancelAnimationFrame(rafRef.current)
       const el = overlayRef.current
       if (el) el.style.display = 'none'
+      onDoneRef.current?.()
     }
 
     // ── pre-sample pixels from logo (runs immediately on image load) ──────────
@@ -223,7 +230,7 @@ export default function IntroOverlay() {
     if (!el) return
     el.style.transition = 'opacity 0.3s ease'
     el.style.opacity    = '0'
-    setTimeout(() => { el.style.display = 'none' }, 300)
+    setTimeout(() => { el.style.display = 'none'; onDoneRef.current?.() }, 300)
   }
 
   return (

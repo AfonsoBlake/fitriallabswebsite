@@ -25,7 +25,10 @@ const resources: { title: string; description: string[]; button: string; href: s
   {
     title: "Instagram DM Automation: What Works in 2026",
     description: [
-      "DM automation has been around for years. Most businesses are still doing it wrong. This report covers where it started, where it is now, and where it's going. It breaks down why keyword flows fail, why email is losing the attention war, and what the data actually says when you stack DM automation against every other channel. Real research. No fluff. Built for businesses serious about their DMs.",
+      "DM automation has been around for years. Most businesses are still doing it wrong.",
+      "This report covers where it started, where it is now, and where it's going.",
+      "It breaks down why keyword flows fail, why email is losing the attention war, and what the data actually says when you stack DM automation against every other channel.",
+      "Real research. No fluff. Built for businesses serious about their DMs.",
     ],
     button: "Read Report",
     href: "https://drive.google.com/file/d/1KEoG1uc_JG9lKYpAdnzL2JKPvTy7BlO1/view?usp=sharing",
@@ -37,6 +40,10 @@ export function FreeResourcesPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
