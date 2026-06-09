@@ -94,7 +94,7 @@ export function RegisterInterest() {
             >
               {/* Top accent label — nowrap */}
               <p style={{ ...monoAccentLabel, whiteSpace: "nowrap", overflow: "hidden" }}>
-                GET A COMPLETE FREE 21 DAY DEMO, NO LIMITS
+                GET A COMPLETE FREE 14 DAY DEMO, NO LIMITS
               </p>
 
               {/* Headline — 2rem / 32px */}
@@ -103,7 +103,7 @@ export function RegisterInterest() {
                 style={{ fontSize: "2rem", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 900 }}
               >
                 Claim a no-cost{" "}
-                <span className="glow">21 day</span>{" "}
+                <span className="glow">14 day</span>{" "}
                 full inclusive integration, on us
               </h2>
 
@@ -141,7 +141,7 @@ export function RegisterInterest() {
                     ONBOARDING RATE
                   </p>
                   <p style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "1.9rem", color: "#FFFFFF", lineHeight: 1 }}>
-                    ~3/wk
+                    ~2/wk
                   </p>
                 </div>
               </div>
@@ -257,7 +257,7 @@ export function RegisterInterest() {
                   <p className="text-sm leading-relaxed" style={{ color: "rgba(196,184,240,0.6)" }}>
                     Our team reviews every application personally. If you&apos;re a
                     good fit we&apos;ll reach out to schedule your onboarding call and
-                    get your AI system running — at zero cost for 21 days.
+                    get your AI system running — at zero cost for 14 days.
                   </p>
                   <button
                     onClick={resetForm}
@@ -282,7 +282,7 @@ export function RegisterInterest() {
                   <div className="mb-6">
                     <p style={monoAccentLabel} className="mb-2">APPLY</p>
                     <p className="text-sm leading-relaxed" style={{ color: "#C4B8F0" }}>
-                      We review every application personally — and set up your entire AI system at no cost for 21 days.
+                      We review every application personally — and set up your entire AI system at no cost for 14 days.
                     </p>
                   </div>
 
@@ -402,7 +402,7 @@ export function RegisterInterest() {
                         cursor: isSubmitting ? "not-allowed" : "pointer",
                       }}
                     >
-                      {isSubmitting ? "Submitting…" : "Claim My Free 21 Days"}
+                      {isSubmitting ? "Submitting…" : "Claim My Free 14 Days"}
                     </button>
                   </div>
                 </>

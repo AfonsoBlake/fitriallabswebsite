@@ -1,12 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { NotifyModal } from "@/components/NotifyModal";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import { Reveal } from "@/components/Reveal";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ACCENT = "#6B6FD4";
 const LAVENDER = "#C4B8F0";
@@ -25,9 +21,10 @@ const resources: { title: string; description: string[]; button: string; href: s
   {
     title: "Instagram DM Automation: What Works in 2026",
     description: [
-      "DM automation has been around for years. Most businesses are still doing it wrong.",
+      "DM automation has been around for years.",
+      "Most businesses are still doing it wrong.",
       "This report covers where it started, where it is now, and where it's going.",
-      "It breaks down why keyword flows fail, why email is losing the attention war, and what the data actually says when you stack DM automation against every other channel.",
+      "It breaks down why keyword flows fail,\nwhy email is losing the attention war, and\nwhat the data actually says when you stack\nDM automation against every other channel.",
       "Real research. No fluff. Built for businesses serious about their DMs.",
     ],
     button: "Read Report",
@@ -38,38 +35,9 @@ const resources: { title: string; description: string[]; button: string; href: s
 
 export function FreeResourcesPage() {
   const [modalOpen, setModalOpen] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const track = trackRef.current;
-    if (!section || !track) return;
-
-    const ctx = gsap.context(() => {
-      const scrollAmount = track.scrollWidth - section.offsetWidth;
-      if (scrollAmount <= 0) return;
-
-      gsap.to(track, {
-        x: -scrollAmount,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: `+=${scrollAmount}`,
-          pin: true,
-          scrub: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-    }, section);
-
-    return () => ctx.revert();
   }, []);
 
   return (
@@ -112,21 +80,32 @@ export function FreeResourcesPage() {
         </div>
       </section>
 
-      {/* ── Resource Cards (pinned horizontal scroll) ── */}
+      {/* ── Resource Cards (native horizontal scroll) ── */}
       <section
-        ref={sectionRef}
         style={{
           background: "#0D0B2B",
-          overflow: "hidden",
           position: "relative",
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
           paddingTop: "5rem",
           paddingBottom: "5rem",
         }}
       >
+        <style>{`
+          .resources-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #6366F1 #1a1a2e;
+          }
+          .resources-scroll::-webkit-scrollbar {
+            height: 6px;
+          }
+          .resources-scroll::-webkit-scrollbar-track {
+            background: #1a1a2e;
+          }
+          .resources-scroll::-webkit-scrollbar-thumb {
+            background-color: #6366F1;
+            border-radius: 3px;
+          }
+        `}</style>
+
         <div style={{ paddingLeft: "clamp(1.5rem, 6vw, 6rem)", marginBottom: "3rem" }}>
           <Reveal>
             <p
@@ -149,13 +128,14 @@ export function FreeResourcesPage() {
         </div>
 
         <div
-          ref={trackRef}
+          className="resources-scroll"
           style={{
             display: "flex",
-            gap: "2rem",
-            paddingLeft: "clamp(1.5rem, 6vw, 6rem)",
-            paddingRight: "clamp(1.5rem, 6vw, 6rem)",
-            willChange: "transform",
+            gap: "1.5rem",
+            padding: "1rem",
+            overflowX: "auto",
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
           }}
         >
           {resources.map((res, i) => (
@@ -164,7 +144,8 @@ export function FreeResourcesPage() {
               className="card-fluario"
               style={{
                 flexShrink: 0,
-                width: "clamp(320px, 60vw, 800px)",
+                minWidth: "min(420px, 85vw)",
+                scrollSnapAlign: "start",
                 display: "flex",
                 flexDirection: "column",
               }}
@@ -186,6 +167,7 @@ export function FreeResourcesPage() {
                 {res.description.map((line, j) => (
                   <p
                     key={j}
+                    className="whitespace-pre-line"
                     style={{
                       color: LAVENDER,
                       lineHeight: 1.7,
@@ -220,7 +202,8 @@ export function FreeResourcesPage() {
             className="card-fluario"
             style={{
               flexShrink: 0,
-              width: "clamp(320px, 60vw, 800px)",
+              minWidth: "min(420px, 85vw)",
+              scrollSnapAlign: "start",
               display: "flex",
               flexDirection: "column",
             }}
@@ -292,6 +275,14 @@ export function FreeResourcesPage() {
             </button>
           </div>
         </div>
+
+        {/* Mobile swipe hint — hidden on md+ */}
+        <p
+          className="md:hidden text-sm"
+          style={{ paddingLeft: "1rem", marginTop: "0.75rem", color: "rgba(255,255,255,0.3)" }}
+        >
+          Swipe to see more →
+        </p>
       </section>
 
       {/* ── CTA ── */}
