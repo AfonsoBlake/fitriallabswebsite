@@ -7,6 +7,7 @@ import { LiveDemo } from "@/components/LiveDemo";
 import { Etymology } from "@/components/Etymology";
 import { Founders } from "@/components/Founders";
 import { CaseStudy } from "@/components/CaseStudy";
+import { Roadmap } from "@/components/Roadmap";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Services } from "@/components/Services";
 import { Pricing } from "@/components/Pricing";
@@ -29,6 +30,7 @@ function Index() {
       <Etymology />
       <div id="founders"><Founders /></div>
       <div id="case-study"><CaseStudy /></div>
+      <Roadmap />
       <HowItWorks />
       <Services />
       <Pricing />
