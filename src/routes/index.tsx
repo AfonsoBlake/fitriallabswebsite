@@ -28,10 +28,10 @@ function Index() {
       <LiveDemo />
       <Etymology />
       <div id="case-study"><CaseStudy /></div>
+      <Pricing />
       <Roadmap />
       <HowItWorks />
       <Services />
-      <Pricing />
       <Booking />
       <Footer />
       <FloatingCTA />
