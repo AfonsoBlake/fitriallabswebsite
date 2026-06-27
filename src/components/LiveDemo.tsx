@@ -13,7 +13,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: "seed-1",
     role: "assistant",
-    content: "Hey! I'm Afonso, founder at Flaurio. What kind of business are you running?",
+    content: "Hey! I'm Afonso, founder at Fluario. What kind of business are you running?",
   },
 ];
 

@@ -16,7 +16,7 @@ const steps = [
   {
     n: "02",
     t: "WE BUILD AND YOU TEST",
-    d: "We build your custom AI agent and deploy it on Flaurio's own accounts first so you can test the full experience before it goes live on yours. Zero risk, full visibility. Then we get Meta Business Manager access and go live across Instagram, TikTok, Facebook, WhatsApp, and Telegram.",
+    d: "We build your custom AI agent and deploy it on Fluario's own accounts first so you can test the full experience before it goes live on yours. Zero risk, full visibility. Then we get Meta Business Manager access and go live across Instagram, TikTok, Facebook, WhatsApp, and Telegram.",
   },
   {
     n: "03",

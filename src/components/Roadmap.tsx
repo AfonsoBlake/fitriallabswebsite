@@ -61,7 +61,7 @@ const phases = [
       "CRM sync with GoHighLevel, HubSpot, and Salesforce",
       "Renewal reminders via automated DM",
       "Call recording with AI feedback on conversations",
-      "Agency white-label so agencies run Flaurio under their own brand",
+      "Agency white-label so agencies run Fluario under their own brand",
     ],
   },
 ];
