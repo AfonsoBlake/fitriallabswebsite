@@ -5,7 +5,6 @@ import { Infrastructure } from "@/components/Infrastructure";
 import { StatsBar } from "@/components/StatsBar";
 import { LiveDemo } from "@/components/LiveDemo";
 import { Etymology } from "@/components/Etymology";
-import { Founders } from "@/components/Founders";
 import { CaseStudy } from "@/components/CaseStudy";
 import { Roadmap } from "@/components/Roadmap";
 import { HowItWorks } from "@/components/HowItWorks";
@@ -28,7 +27,6 @@ function Index() {
       <StatsBar />
       <LiveDemo />
       <Etymology />
-      <div id="founders"><Founders /></div>
       <div id="case-study"><CaseStudy /></div>
       <Roadmap />
       <HowItWorks />

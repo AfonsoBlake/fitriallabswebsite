@@ -13,7 +13,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: "seed-1",
     role: "assistant",
-    content: "Hey! I'm Kareem, co-founder at Fluario. What kind of business are you running?",
+    content: "Hey! I'm Afonso, founder at Flaurio. What kind of business are you running?",
   },
 ];
 
@@ -103,7 +103,7 @@ export function LiveDemo() {
                     <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
                   </span>
-                  <span className="font-mono-caps text-white">Kareem</span>
+                  <span className="font-mono-caps text-white">Afonso</span>
                 </div>
                 <span
                   className="font-mono-caps rounded-full px-3 py-1"

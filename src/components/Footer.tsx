@@ -20,7 +20,6 @@ export function Footer() {
               <a href="#services" className={linkCls}>Services</a>
               <a href="#pricing" className={linkCls}>Pricing</a>
               <a href="#case-study" className={linkCls}>Case Study</a>
-              <a href="#founders" className={linkCls}>Founders</a>
             </div>
           </div>
           <div>
