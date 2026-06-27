@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import ReactGA from 'react-ga4'
 import IntroOverlay from '../components/IntroOverlay'
 import QuizModal from '../components/QuizModal'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -6,6 +7,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  useLocation,
   useRouter,
 } from "@tanstack/react-router";
 
@@ -86,6 +88,11 @@ function shouldShowQuiz(): boolean {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [quizVisible, setQuizVisible] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.searchStr });
+  }, [location.pathname, location.searchStr]);
 
   return (
     <QueryClientProvider client={queryClient}>
