@@ -54,7 +54,16 @@ export function Navbar() {
           >
             FREE TRIAL
           </Link>
-          <Link to="/" hash="booking" className="btn-primary text-sm">BOOK A CALL</Link>
+          <Link
+            to="/"
+            hash="booking"
+            className="btn-primary text-sm"
+            data-cal-link="fluario-jejc7g/30min"
+            data-cal-namespace="30min"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+          >
+            BOOK A CALL
+          </Link>
         </div>
         <button className="md:hidden text-white" onClick={() => setOpen(!open)} aria-label="Menu">
           {open ? <X /> : <Menu />}
@@ -73,7 +82,17 @@ export function Navbar() {
           >
             FREE TRIAL
           </Link>
-          <Link to="/" hash="booking" onClick={() => setOpen(false)} className="btn-primary text-sm justify-center">BOOK A CALL</Link>
+          <Link
+            to="/"
+            hash="booking"
+            onClick={() => setOpen(false)}
+            className="btn-primary text-sm justify-center"
+            data-cal-link="fluario-jejc7g/30min"
+            data-cal-namespace="30min"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+          >
+            BOOK A CALL
+          </Link>
         </div>
       )}
     </nav>

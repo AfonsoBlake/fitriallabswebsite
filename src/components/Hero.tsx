@@ -31,7 +31,15 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="mt-8 flex flex-wrap gap-4"
           >
-            <a href="#booking" className="btn-primary">BOOK A FREE DEMO <ArrowRight size={18} /></a>
+            <a
+              href="#booking"
+              className="btn-primary"
+              data-cal-link="fluario-jejc7g/30min"
+              data-cal-namespace="30min"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            >
+              BOOK A FREE DEMO <ArrowRight size={18} />
+            </a>
             <a href="#how-it-works" className="btn-secondary">SEE HOW IT WORKS</a>
           </motion.div>
         </div>

@@ -25,9 +25,9 @@ export function Booking() {
         <Reveal delay={0.1}>
           <div className="flex items-center justify-center w-full rounded-2xl" style={{ minHeight: 320, border: "1px solid rgba(107,111,212,0.3)", background: "rgba(107,111,212,0.05)" }}>
             <a
-              href="https://calendly.com/fittriallabs/30min"
-              target="_blank"
-              rel="noopener noreferrer"
+              data-cal-link="fluario-jejc7g/30min"
+              data-cal-namespace="30min"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
               className="font-mono-caps text-white text-lg"
               style={{
                 background: "#6B6FD4",
@@ -35,6 +35,7 @@ export function Booking() {
                 padding: "1rem 2.5rem",
                 boxShadow: "0 0 30px rgba(107,111,212,0.6), 0 10px 25px rgba(0,0,0,0.35)",
                 display: "inline-block",
+                cursor: "pointer",
               }}
             >
               BOOK YOUR FREE CALL

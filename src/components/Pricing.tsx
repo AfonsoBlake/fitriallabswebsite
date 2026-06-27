@@ -53,11 +53,11 @@ export function Pricing() {
             </p>
 
             <a
-              href="https://calendly.com/fittriallabs/30min"
-              target="_blank"
-              rel="noopener noreferrer"
+              data-cal-link="fluario-jejc7g/30min"
+              data-cal-namespace="30min"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
               className="btn-primary mt-6"
-              style={{ display: "inline-flex", justifyContent: "center" }}
+              style={{ display: "inline-flex", justifyContent: "center", cursor: "pointer" }}
             >
               Book a Call
             </a>

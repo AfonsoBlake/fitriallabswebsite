@@ -279,9 +279,9 @@ export default function QuizModal({ onClose }: Props) {
                 </p>
 
                 <a
-                  href="https://calendly.com/fittriallabs/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  data-cal-link="fluario-jejc7g/30min"
+                  data-cal-namespace="30min"
+                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                   style={{
                     display: 'inline-block',
                     background: 'linear-gradient(135deg, #6B6FD4, #8B8FE8)',
@@ -294,6 +294,7 @@ export default function QuizModal({ onClose }: Props) {
                     textDecoration: 'none',
                     letterSpacing: '0.025em',
                     boxShadow: '0 4px 24px rgba(107, 111, 212, 0.4)',
+                    cursor: 'pointer',
                   }}
                 >
                   Book a free demo

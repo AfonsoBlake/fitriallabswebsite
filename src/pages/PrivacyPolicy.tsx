@@ -145,7 +145,7 @@ export function PrivacyPolicy() {
           <li><span style={{ color: "#fff", fontWeight: 600 }}>Google Sheets</span> — for storing form submissions</li>
           <li><span style={{ color: "#fff", fontWeight: 600 }}>Vercel</span> — for website hosting</li>
           <li><span style={{ color: "#fff", fontWeight: 600 }}>Supabase</span> — for backend infrastructure</li>
-          <li><span style={{ color: "#fff", fontWeight: 600 }}>Calendly</span> — for booking calls (subject to Calendly's own privacy policy)</li>
+          <li><span style={{ color: "#fff", fontWeight: 600 }}>Cal.com</span> — for booking calls (subject to Cal.com's own privacy policy)</li>
           <li><span style={{ color: "#fff", fontWeight: 600 }}>Groq</span> — for AI chat functionality</li>
         </ul>
 

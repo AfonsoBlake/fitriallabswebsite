@@ -410,10 +410,11 @@ export function HowItWorksPage() {
               }}
             >
               <a
-                href="https://calendly.com/fittriallabs/30min"
-                target="_blank"
-                rel="noopener noreferrer"
+                data-cal-link="fluario-jejc7g/30min"
+                data-cal-namespace="30min"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
                 className="btn-secondary"
+                style={{ cursor: "pointer" }}
               >
                 BOOK A CALL
               </a>

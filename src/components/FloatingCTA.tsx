@@ -15,9 +15,9 @@ export function FloatingCTA() {
     <AnimatePresence>
       {visible && (
         <motion.a
-          href="https://calendly.com/fittriallabs/30min"
-          target="_blank"
-          rel="noopener noreferrer"
+          data-cal-link="fluario-jejc7g/30min"
+          data-cal-namespace="30min"
+          data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
@@ -28,6 +28,7 @@ export function FloatingCTA() {
             borderRadius: 50,
             padding: "0.75rem 1.5rem",
             boxShadow: "0 0 30px rgba(107,111,212,0.6), 0 10px 25px rgba(0,0,0,0.35)",
+            cursor: "pointer",
           }}
         >
           BOOK YOUR FREE CALL
