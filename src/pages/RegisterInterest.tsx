@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-const inputClass =
-  "w-full bg-[rgba(30,27,75,0.3)] border border-[rgba(107,111,212,0.3)] rounded-lg px-4 py-3 text-white placeholder-[rgba(196,184,240,0.35)] focus:outline-none focus:border-[#6B6FD4] transition-colors text-sm";
+const inputClass = (hasError: boolean) =>
+  `w-full bg-[rgba(30,27,75,0.3)] border ${
+    hasError ? "border-red-400" : "border-[rgba(107,111,212,0.3)]"
+  } rounded-lg px-4 py-3 text-white placeholder-[rgba(196,184,240,0.35)] focus:outline-none ${
+    hasError ? "focus:border-red-400" : "focus:border-[#6B6FD4]"
+  } transition-colors text-sm`;
+
+const errorTextClass = "mt-1.5 text-xs text-red-400";
 
 const labelClass = "font-mono-caps block mb-2";
 
@@ -22,9 +28,29 @@ const selectArrow = {
   backgroundPosition: "right 14px center",
 };
 
+type RequiredField =
+  | "name"
+  | "email"
+  | "businessName"
+  | "primaryPlatform"
+  | "monthlyDmVolume"
+  | "mainGoal";
+
+type FieldErrors = Partial<Record<RequiredField, string>>;
+
+const REQUIRED_FIELD_ORDER: RequiredField[] = [
+  "name",
+  "email",
+  "businessName",
+  "primaryPlatform",
+  "monthlyDmVolume",
+  "mainGoal",
+];
+
 export function RegisterInterest() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -33,6 +59,31 @@ export function RegisterInterest() {
   const [monthlyDmVolume, setMonthlyDmVolume] = useState("");
   const [mainGoal, setMainGoal] = useState("");
   const [phone, setPhone] = useState("");
+
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const businessNameRef = useRef<HTMLInputElement>(null);
+  const primaryPlatformRef = useRef<HTMLSelectElement>(null);
+  const monthlyDmVolumeRef = useRef<HTMLSelectElement>(null);
+  const mainGoalRef = useRef<HTMLTextAreaElement>(null);
+
+  const fieldRefs: Record<RequiredField, React.RefObject<HTMLElement | null>> = {
+    name: nameRef,
+    email: emailRef,
+    businessName: businessNameRef,
+    primaryPlatform: primaryPlatformRef,
+    monthlyDmVolume: monthlyDmVolumeRef,
+    mainGoal: mainGoalRef,
+  };
+
+  const clearError = (field: RequiredField) => {
+    setErrors(prev => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
 
   const resetForm = () => {
     setName("");
@@ -43,9 +94,31 @@ export function RegisterInterest() {
     setMainGoal("");
     setPhone("");
     setSubmitted(false);
+    setErrors({});
   };
 
   const handleSubmit = async () => {
+    const newErrors: FieldErrors = {};
+    if (!name.trim()) newErrors.name = "This field is required";
+    if (!email.trim()) newErrors.email = "This field is required";
+    if (!businessName.trim()) newErrors.businessName = "This field is required";
+    if (!primaryPlatform) newErrors.primaryPlatform = "This field is required";
+    if (!monthlyDmVolume) newErrors.monthlyDmVolume = "This field is required";
+    if (!mainGoal.trim()) newErrors.mainGoal = "This field is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      const firstInvalidField = REQUIRED_FIELD_ORDER.find(field => newErrors[field]);
+      const el = firstInvalidField ? fieldRefs[firstInvalidField].current : null;
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        if (!isInView) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.focus();
+      }
+      return;
+    }
+
     console.log('submitting form...');
     const formData = new FormData();
     formData.append('submittedAt', new Date().toISOString());
@@ -127,7 +200,7 @@ export function RegisterInterest() {
                     SPOTS REMAINING
                   </p>
                   <p style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "1.9rem", color: "#6B6FD4", lineHeight: 1 }}>
-                    12
+                    4
                   </p>
                 </div>
                 <div
@@ -293,22 +366,26 @@ export function RegisterInterest() {
                       <div>
                         <label className={labelClass}>NAME *</label>
                         <input
+                          ref={nameRef}
                           type="text"
-                          className={inputClass}
+                          className={inputClass(!!errors.name)}
                           placeholder="Your name"
                           value={name}
-                          onChange={e => setName(e.target.value)}
+                          onChange={e => { setName(e.target.value); clearError("name"); }}
                         />
+                        {errors.name && <p className={errorTextClass}>{errors.name}</p>}
                       </div>
                       <div>
                         <label className={labelClass}>EMAIL *</label>
                         <input
+                          ref={emailRef}
                           type="email"
-                          className={inputClass}
+                          className={inputClass(!!errors.email)}
                           placeholder="you@business.com"
                           value={email}
-                          onChange={e => setEmail(e.target.value)}
+                          onChange={e => { setEmail(e.target.value); clearError("email"); }}
                         />
+                        {errors.email && <p className={errorTextClass}>{errors.email}</p>}
                       </div>
                     </div>
 
@@ -317,20 +394,23 @@ export function RegisterInterest() {
                       <div>
                         <label className={labelClass}>BUSINESS NAME *</label>
                         <input
+                          ref={businessNameRef}
                           type="text"
-                          className={inputClass}
+                          className={inputClass(!!errors.businessName)}
                           placeholder="Your business"
                           value={businessName}
-                          onChange={e => setBusinessName(e.target.value)}
+                          onChange={e => { setBusinessName(e.target.value); clearError("businessName"); }}
                         />
+                        {errors.businessName && <p className={errorTextClass}>{errors.businessName}</p>}
                       </div>
                       <div>
                         <label className={labelClass}>PRIMARY PLATFORM *</label>
                         <select
-                          className={inputClass}
+                          ref={primaryPlatformRef}
+                          className={inputClass(!!errors.primaryPlatform)}
                           style={selectArrow}
                           value={primaryPlatform}
-                          onChange={e => setPrimaryPlatform(e.target.value)}
+                          onChange={e => { setPrimaryPlatform(e.target.value); clearError("primaryPlatform"); }}
                         >
                           <option value="" style={{ background: "#1E1B4B" }}>Select platform</option>
                           <option value="Instagram" style={{ background: "#1E1B4B" }}>Instagram</option>
@@ -340,6 +420,7 @@ export function RegisterInterest() {
                           <option value="Telegram" style={{ background: "#1E1B4B" }}>Telegram</option>
                           <option value="Multiple" style={{ background: "#1E1B4B" }}>Multiple</option>
                         </select>
+                        {errors.primaryPlatform && <p className={errorTextClass}>{errors.primaryPlatform}</p>}
                       </div>
                     </div>
 
@@ -347,10 +428,11 @@ export function RegisterInterest() {
                     <div>
                       <label className={labelClass}>MONTHLY DM VOLUME *</label>
                       <select
-                        className={inputClass}
+                        ref={monthlyDmVolumeRef}
+                        className={inputClass(!!errors.monthlyDmVolume)}
                         style={selectArrow}
                         value={monthlyDmVolume}
-                        onChange={e => setMonthlyDmVolume(e.target.value)}
+                        onChange={e => { setMonthlyDmVolume(e.target.value); clearError("monthlyDmVolume"); }}
                       >
                         <option value="" style={{ background: "#1E1B4B" }}>Select volume</option>
                         <option value="Under 100" style={{ background: "#1E1B4B" }}>Under 100</option>
@@ -358,18 +440,21 @@ export function RegisterInterest() {
                         <option value="500–2,000" style={{ background: "#1E1B4B" }}>500–2,000</option>
                         <option value="2,000+" style={{ background: "#1E1B4B" }}>2,000+</option>
                       </select>
+                      {errors.monthlyDmVolume && <p className={errorTextClass}>{errors.monthlyDmVolume}</p>}
                     </div>
 
                     {/* MAIN GOAL */}
                     <div>
                       <label className={labelClass}>WHAT&apos;S YOUR MAIN GOAL? *</label>
                       <textarea
-                        className={inputClass}
+                        ref={mainGoalRef}
+                        className={inputClass(!!errors.mainGoal)}
                         style={{ resize: "vertical", minHeight: "88px" }}
                         placeholder="e.g. convert more DMs, stop missing leads, scale without hiring..."
                         value={mainGoal}
-                        onChange={e => setMainGoal(e.target.value)}
+                        onChange={e => { setMainGoal(e.target.value); clearError("mainGoal"); }}
                       />
+                      {errors.mainGoal && <p className={errorTextClass}>{errors.mainGoal}</p>}
                     </div>
 
                     {/* PHONE */}
@@ -382,7 +467,7 @@ export function RegisterInterest() {
                       </label>
                       <input
                         type="tel"
-                        className={inputClass}
+                        className={inputClass(false)}
                         placeholder="+971 50 000 0000"
                         value={phone}
                         onChange={e => setPhone(e.target.value)}
