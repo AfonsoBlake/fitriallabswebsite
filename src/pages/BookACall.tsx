@@ -28,6 +28,17 @@ const selectArrow = {
   backgroundPosition: "right 14px center",
 };
 
+const CAL_LINK = "fluario-jejc7g/30min";
+const CAL_NAMESPACE = "30min";
+const CAL_CONFIG = { layout: "month_view", useSlotsViewOnSmallScreen: "true" };
+
+const openCalModal = () => {
+  window.Cal?.ns[CAL_NAMESPACE]("modal", {
+    calLink: CAL_LINK,
+    config: CAL_CONFIG,
+  });
+};
+
 type RequiredField =
   | "name"
   | "email"
@@ -47,7 +58,7 @@ const REQUIRED_FIELD_ORDER: RequiredField[] = [
   "mainGoal",
 ];
 
-export function RegisterInterest() {
+export function BookACall() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -119,7 +130,6 @@ export function RegisterInterest() {
       return;
     }
 
-    console.log('submitting form...');
     const formData = new FormData();
     formData.append('submittedAt', new Date().toISOString());
     formData.append('name', name);
@@ -129,8 +139,7 @@ export function RegisterInterest() {
     formData.append('monthlyDmVolume', monthlyDmVolume);
     formData.append('mainGoal', mainGoal);
     formData.append('phone', phone || '');
-
-    console.log('posting to google sheets...');
+    formData.append('source', 'book-a-call-page');
 
     setIsSubmitting(true);
     try {
@@ -138,9 +147,8 @@ export function RegisterInterest() {
         method: 'POST',
         body: formData,
       });
-      console.log('submitted successfully');
       setSubmitted(true);
-      setTimeout(() => resetForm(), 5000);
+      openCalModal();
     } catch (err) {
       console.error('submission error:', err);
       alert('Something went wrong. Please try again.');
@@ -167,7 +175,7 @@ export function RegisterInterest() {
             >
               {/* Top accent label — nowrap */}
               <p style={{ ...monoAccentLabel, whiteSpace: "nowrap", overflow: "hidden" }}>
-                GET A COMPLETE FREE 14 DAY DEMO, NO LIMITS
+                BOOK A STRATEGY CALL
               </p>
 
               {/* Headline — 2rem / 32px */}
@@ -175,114 +183,15 @@ export function RegisterInterest() {
                 className="text-white"
                 style={{ fontSize: "2rem", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 900 }}
               >
-                Claim a no-cost{" "}
-                <span className="glow">14 day</span>{" "}
-                full inclusive integration, on us
+                LET&apos;S TALK ABOUT <span className="glow">YOUR BUSINESS</span>
               </h2>
 
               {/* Mono subtext — smaller, compact */}
               <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", color: "#C4B8F0", lineHeight: 1.65 }}>
-                Planted and sprouted in Abu Dhabi and growing rapidly globally.
-                Rolling access in small waves, something worth grabbing before
-                it&apos;s too late!
+                Tell us a bit about yourself before we meet — it means we can
+                skip the basics and get straight to what matters for your
+                business.
               </p>
-
-              {/* Stat boxes */}
-              <div className="grid grid-cols-2 gap-3">
-                <div
-                  className="rounded-lg p-4"
-                  style={{ border: "1px solid rgba(107,111,212,0.35)", background: "rgba(30,27,75,0.45)" }}
-                >
-                  <p
-                    className="font-mono-caps mb-2"
-                    style={{ fontSize: "0.58rem", whiteSpace: "nowrap" }}
-                  >
-                    SPOTS REMAINING
-                  </p>
-                  <p style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "1.9rem", color: "#6B6FD4", lineHeight: 1 }}>
-                    4
-                  </p>
-                </div>
-                <div
-                  className="rounded-lg p-4"
-                  style={{ border: "1px solid rgba(107,111,212,0.35)", background: "rgba(30,27,75,0.45)" }}
-                >
-                  <p
-                    className="font-mono-caps mb-2"
-                    style={{ fontSize: "0.58rem", whiteSpace: "nowrap" }}
-                  >
-                    ONBOARDING RATE
-                  </p>
-                  <p style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "1.9rem", color: "#FFFFFF", lineHeight: 1 }}>
-                    ~2/wk
-                  </p>
-                </div>
-              </div>
-
-              {/* Rollout progress bar */}
-              <div>
-                <p
-                  className="font-mono-caps mb-3"
-                  style={{ fontSize: "0.58rem", whiteSpace: "nowrap" }}
-                >
-                  ROLLOUT
-                </p>
-                <div className="flex rounded-lg overflow-hidden" style={{ border: "1px solid rgba(107,111,212,0.3)" }}>
-                  <div
-                    className="flex-1 min-w-0 px-2 py-2 text-center overflow-hidden"
-                    style={{ background: "rgba(30,27,75,0.5)", borderRight: "1px solid rgba(107,111,212,0.3)" }}
-                  >
-                    <span style={{
-                      fontFamily: "var(--font-mono)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                      fontSize: "0.48rem",
-                      color: "rgba(196,184,240,0.5)",
-                      display: "block",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}>
-                      AI ARCHITECTURE DEVELOPING &amp; BUILDING
-                    </span>
-                  </div>
-                  <div
-                    className="flex-1 min-w-0 px-2 py-2 text-center"
-                    style={{ background: "#6B6FD4", borderRight: "1px solid rgba(107,111,212,0.5)" }}
-                  >
-                    <span style={{
-                      fontFamily: "var(--font-mono)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                      fontSize: "0.48rem",
-                      color: "#FFFFFF",
-                      display: "block",
-                      whiteSpace: "nowrap",
-                      fontWeight: 700,
-                    }}>
-                      EARLY ACCESS
-                    </span>
-                  </div>
-                  <div
-                    className="flex-1 min-w-0 px-2 py-2 text-center overflow-hidden"
-                    style={{ background: "rgba(30,27,75,0.5)" }}
-                  >
-                    <span style={{
-                      fontFamily: "var(--font-mono)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                      fontSize: "0.48rem",
-                      color: "rgba(196,184,240,0.35)",
-                      display: "block",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}>
-                      PUBLIC BETA
-                    </span>
-                  </div>
-                </div>
-              </div>
 
               {/* Terminal block */}
               <div
@@ -295,10 +204,10 @@ export function RegisterInterest() {
                   lineHeight: 1.85,
                 }}
               >
-                <p style={{ color: "#C4B8F0", whiteSpace: "nowrap" }}>$ sys: early_access_v1</p>
-                <p style={{ color: "#C4B8F0", whiteSpace: "nowrap" }}>$ mode: application_only</p>
+                <p style={{ color: "#C4B8F0", whiteSpace: "nowrap" }}>$ step_1: we review your answers</p>
+                <p style={{ color: "#C4B8F0", whiteSpace: "nowrap" }}>$ step_2: call is confirmed</p>
                 <p style={{ color: "#C4B8F0", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px" }}>
-                  $ status: accepting&nbsp;
+                  $ step_3: we build your AI system live&nbsp;
                   <span
                     className="cursor-blink"
                     style={{ display: "inline-block", width: "8px", height: "13px", background: "#6B6FD4", verticalAlign: "middle", flexShrink: 0 }}
@@ -316,22 +225,29 @@ export function RegisterInterest() {
                     className="rounded-lg px-3 py-1"
                     style={{ background: "rgba(107,111,212,0.15)", border: "1px solid rgba(107,111,212,0.4)" }}
                   >
-                    <span style={{ ...monoAccentLabel, color: "#6B6FD4" }}>APPLICATION RECEIVED</span>
+                    <span style={{ ...monoAccentLabel, color: "#6B6FD4" }}>DETAILS RECEIVED</span>
                   </div>
                   <h3
                     className="text-white"
                     style={{ fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.02em" }}
                   >
-                    You&apos;re in.
+                    Let&apos;s pick a time.
                   </h3>
                   <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "#C4B8F0", lineHeight: 1.7 }}>
-                    We&apos;ll be in touch within 48 hours.
+                    Your calendar should be opening now.
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: "rgba(196,184,240,0.6)" }}>
-                    Our team reviews every application personally. If you&apos;re a
-                    good fit we&apos;ll reach out to schedule your onboarding call and
-                    get your AI system running — at zero cost for 14 days.
+                    If it didn&apos;t open automatically, click below to choose a
+                    time that works for you.
                   </p>
+                  <button
+                    type="button"
+                    onClick={openCalModal}
+                    className="btn-primary"
+                    style={{ fontSize: "0.78rem", padding: "0.55rem 1.1rem" }}
+                  >
+                    Open Calendar
+                  </button>
                   <button
                     onClick={resetForm}
                     style={{
@@ -353,9 +269,9 @@ export function RegisterInterest() {
                 /* ── FORM STATE ── */
                 <>
                   <div className="mb-6">
-                    <p style={monoAccentLabel} className="mb-2">APPLY</p>
+                    <p style={monoAccentLabel} className="mb-2">YOUR DETAILS</p>
                     <p className="text-sm leading-relaxed" style={{ color: "#C4B8F0" }}>
-                      We review every application personally — and set up your entire AI system at no cost for 14 days.
+                      Takes 60 seconds. We review every application before confirming your call.
                     </p>
                   </div>
 
@@ -487,7 +403,7 @@ export function RegisterInterest() {
                         cursor: isSubmitting ? "not-allowed" : "pointer",
                       }}
                     >
-                      {isSubmitting ? "Submitting…" : "Claim My Free 14 Days"}
+                      {isSubmitting ? "Submitting…" : "Schedule My Call →"}
                     </button>
                   </div>
                 </>

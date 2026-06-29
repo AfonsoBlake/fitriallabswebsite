@@ -317,7 +317,7 @@ export function FreeResourcesPage() {
               We handle the entire setup — so you can focus on closing.
             </p>
             <div style={{ marginTop: "2.5rem" }}>
-              <Link to="/register-interest" className="btn-primary">
+              <Link to="/book-a-call" className="btn-primary">
                 CLAIM YOUR FREE 21 DAYS
               </Link>
             </div>

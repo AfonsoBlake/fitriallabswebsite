@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { InstagramDMMockup } from "./InstagramDMMockup";
 
 export function Hero() {
@@ -31,15 +32,9 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="mt-8 flex flex-wrap gap-4"
           >
-            <a
-              href="#booking"
-              className="btn-primary"
-              data-cal-link="fluario-jejc7g/30min"
-              data-cal-namespace="30min"
-              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-            >
+            <Link to="/book-a-call" className="btn-primary">
               BOOK A FREE DEMO <ArrowRight size={18} />
-            </a>
+            </Link>
             <a href="#how-it-works" className="btn-secondary">SEE HOW IT WORKS</a>
           </motion.div>
         </div>

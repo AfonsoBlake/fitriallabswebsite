@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 
 const bullets = [
@@ -24,10 +25,8 @@ export function Booking() {
         </Reveal>
         <Reveal delay={0.1}>
           <div className="flex items-center justify-center w-full rounded-2xl" style={{ minHeight: 320, border: "1px solid rgba(107,111,212,0.3)", background: "rgba(107,111,212,0.05)" }}>
-            <a
-              data-cal-link="fluario-jejc7g/30min"
-              data-cal-namespace="30min"
-              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            <Link
+              to="/book-a-call"
               className="font-mono-caps text-white text-lg"
               style={{
                 background: "#6B6FD4",
@@ -39,7 +38,7 @@ export function Booking() {
               }}
             >
               BOOK YOUR FREE CALL
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>

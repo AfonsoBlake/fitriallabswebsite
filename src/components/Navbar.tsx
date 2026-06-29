@@ -47,20 +47,8 @@ export function Navbar() {
             <NavLinkItem key={l.label} link={l} />
           ))}
           <Link
-            to="/register-interest"
-            className="font-mono-caps transition-colors"
-            style={{ color: "#6B6FD4" }}
-            activeProps={{ style: { color: "#8B8FE8" } }}
-          >
-            FREE TRIAL
-          </Link>
-          <Link
-            to="/"
-            hash="booking"
+            to="/book-a-call"
             className="btn-primary text-sm"
-            data-cal-link="fluario-jejc7g/30min"
-            data-cal-namespace="30min"
-            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
           >
             BOOK A CALL
           </Link>
@@ -75,21 +63,9 @@ export function Navbar() {
             <NavLinkItem key={l.label} link={l} onClick={() => setOpen(false)} />
           ))}
           <Link
-            to="/register-interest"
-            onClick={() => setOpen(false)}
-            className="font-mono-caps"
-            style={{ color: "#6B6FD4" }}
-          >
-            FREE TRIAL
-          </Link>
-          <Link
-            to="/"
-            hash="booking"
+            to="/book-a-call"
             onClick={() => setOpen(false)}
             className="btn-primary text-sm justify-center"
-            data-cal-link="fluario-jejc7g/30min"
-            data-cal-namespace="30min"
-            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
           >
             BOOK A CALL
           </Link>

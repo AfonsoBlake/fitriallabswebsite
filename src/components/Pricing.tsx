@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 
 const PRIMARY = "#6366F1";
@@ -52,15 +53,13 @@ export function Pricing() {
               Pricing is based on your platform and DM volume. Book a call and we will build you a quote in 24 hours.
             </p>
 
-            <a
-              data-cal-link="fluario-jejc7g/30min"
-              data-cal-namespace="30min"
-              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            <Link
+              to="/book-a-call"
               className="btn-primary mt-6"
               style={{ display: "inline-flex", justifyContent: "center", cursor: "pointer" }}
             >
               Book a Call
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>

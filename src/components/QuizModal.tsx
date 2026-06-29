@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from '@tanstack/react-router'
 import { CheckCircle, X } from 'lucide-react'
 import { getSupabase } from '../lib/supabase'
 
@@ -278,10 +279,9 @@ export default function QuizModal({ onClose }: Props) {
                   time, on autopilot.
                 </p>
 
-                <a
-                  data-cal-link="fluario-jejc7g/30min"
-                  data-cal-namespace="30min"
-                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                <Link
+                  to="/book-a-call"
+                  onClick={onClose}
                   style={{
                     display: 'inline-block',
                     background: 'linear-gradient(135deg, #6B6FD4, #8B8FE8)',
@@ -298,7 +298,7 @@ export default function QuizModal({ onClose }: Props) {
                   }}
                 >
                   Book a free demo
-                </a>
+                </Link>
 
                 <div style={{ marginTop: '1.25rem' }}>
                   <button

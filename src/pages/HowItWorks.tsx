@@ -409,16 +409,10 @@ export function HowItWorksPage() {
                 flexWrap: "wrap",
               }}
             >
-              <a
-                data-cal-link="fluario-jejc7g/30min"
-                data-cal-namespace="30min"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                className="btn-secondary"
-                style={{ cursor: "pointer" }}
-              >
+              <Link to="/book-a-call" className="btn-secondary" style={{ cursor: "pointer" }}>
                 BOOK A CALL
-              </a>
-              <Link to="/register-interest" className="btn-primary">
+              </Link>
+              <Link to="/book-a-call" className="btn-primary">
                 CLAIM YOUR FREE 21 DAYS
               </Link>
             </div>

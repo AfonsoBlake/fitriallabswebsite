@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 export function Footer() {
   const linkCls = "block text-white transition-colors hover:text-[#6B6FD4]";
   return (
@@ -25,15 +27,9 @@ export function Footer() {
           <div>
             <div className="font-mono-caps mb-4">Contact</div>
             <div className="space-y-2">
-              <a
-                data-cal-link="fluario-jejc7g/30min"
-                data-cal-namespace="30min"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                className={linkCls}
-                style={{ cursor: "pointer" }}
-              >
+              <Link to="/book-a-call" className={linkCls} style={{ cursor: "pointer" }}>
                 Book a Call
-              </a>
+              </Link>
               <a href="mailto:fluario.tech@gmail.com" className={linkCls} style={{ color: "#C4B8F0" }}>fluario.tech@gmail.com</a>
             </div>
           </div>

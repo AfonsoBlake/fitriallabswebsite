@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "@tanstack/react-router";
+
+const MotionLink = motion.create(Link);
 
 export function FloatingCTA() {
   const [visible, setVisible] = useState(false);
@@ -14,10 +17,8 @@ export function FloatingCTA() {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.a
-          data-cal-link="fluario-jejc7g/30min"
-          data-cal-namespace="30min"
-          data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+        <MotionLink
+          to="/book-a-call"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
@@ -32,7 +33,7 @@ export function FloatingCTA() {
           }}
         >
           BOOK YOUR FREE CALL
-        </motion.a>
+        </MotionLink>
       )}
     </AnimatePresence>
   );
